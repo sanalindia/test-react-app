@@ -1,0 +1,51 @@
+// App.js
+import React, { useEffect, useState } from 'react';
+import { fetchData } from './service';
+
+function App() {
+  const [result, setResult] = useState();
+
+  useEffect(() => {
+    fetchData().then((data) => {
+      setResult(data.products);
+    });
+  }, []); // Empty dependency array ensures useEffect runs only once, simulating component mount
+
+  return (
+    <div className="App">
+      <h1> Product Management</h1>
+      {/* Render data */}
+    </div>
+  );
+}
+
+export default App;
+
+
+// service.js
+export const fetchData = () => {
+  return fetch('https://dummyjson.com/products').then((response) => response.json());
+};
+
+
+////////test cases/////////
+import React from 'react';
+import { render, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import App from './App';
+import { fetchData } from './service';
+
+jest.mock('./service'); // Mock the service module
+
+describe('App component', () => {
+  test('calls fetchData on component mount', async () => {
+    fetchData.mockResolvedValueOnce({ products: [{ id: 1, title: 'Product 1', brand: 'Brand 1' }] });
+
+    render(<App />);
+
+    // Wait for fetchData to be called
+    await waitFor(() => {
+      expect(fetchData).toHaveBeenCalled();
+    });
+  });
+});

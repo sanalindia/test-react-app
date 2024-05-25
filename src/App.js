@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import { lazy, useEffect, useState } from "react";
+// import Products from "./products/products";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+import Main from "./lazy-loading/main";
+import MainCustomHook from "./cutom-hook/Main";
+import ParentReduxComp from "./redux-latest/Main";
+import ParentMemoCallback from "./memoize-callback/Main";
+const Products = lazy(() => import("./products/products"));
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>My-app</h1>
+      <a href="/products"> Products </a>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/products" element={<Products />} />
+          <Route path="/lazy" element={<Main />} />
+          <Route path="/custom-hook" element={<MainCustomHook />} />
+          <Route path="/redux-latest" element={<ParentReduxComp />} />
+          <Route path="/memo-callback" element={<ParentMemoCallback />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
-
 export default App;
