@@ -18,12 +18,12 @@ steps:
 - task: Npm@1
   inputs:
     command: 'install'
-    workingDir: 'test-react-app'
+    workingDir: '/'
 
 - task: Npm@1
   inputs:
     command: 'custom'
-    workingDir: 'test-react-app'
+    workingDir: '/'
     customCommand: 'run build'
 
 - task: CopyFiles@2
